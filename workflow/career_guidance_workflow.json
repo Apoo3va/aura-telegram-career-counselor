@@ -1,0 +1,195 @@
+{
+  "name": "Telegram Career Guidance AI Counselor",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "1a2b3c4d-0001-4000-8000-000000000001",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        200,
+        300
+      ],
+      "webhookId": "career-bot-webhook",
+      "credentials": {
+        "telegramApi": {
+          "id": "YOUR_TELEGRAM_CREDENTIAL_ID",
+          "name": "Telegram Bot account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ad31238a-1111-4000-8000-000000000001",
+              "name": "sessionId",
+              "value": "={{ $json.message.chat.id }}",
+              "type": "string"
+            },
+            {
+              "id": "ad31238a-1111-4000-8000-000000000002",
+              "name": "chatInput",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "1a2b3c4d-0006-4000-8000-000000000006",
+      "name": "Format Chat Input",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        420,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "You are 'Aura', an empathetic, insightful, and highly professional AI Career Guidance Counselor.\n\n### Your Role & Objectives:\n1. **Career Exploration & Roadmapping:** Help users discover suitable career paths based on their skills, interests, and background.\n2. **Resume & Profile Optimization:** Provide actionable feedback on resume bullets, cover letters, and LinkedIn profiles.\n3. **Interview Preparation:** Conduct mock interview questions, explain STAR method techniques, and give feedback.\n4. **Skill Gap Analysis:** Identify missing technical or soft skills for target roles and suggest structured learning paths.\n5. **Workplace Navigation:** Offer advice on negotiation, dealing with burnout, workplace conflict, and career transitions.\n\n### Conversational Guidelines:\n- **Leverage Memory:** You have built-in chat memory. Remember the user's name, target role, experience level, and past discussion details across messages.\n- **Tone:** Professional, encouraging, structured, and realistic.\n- **Formatting:** Keep responses readable on Telegram. Use bolding, bullet points, and emojis moderately.\n- **Clarifying Questions:** If a user says 'Help me get a job', ask targeted questions about their field, experience level, and primary goals before giving generic advice."
+        }
+      },
+      "id": "1a2b3c4d-0002-4000-8000-000000000002",
+      "name": "AI Career Counselor",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        660,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "sessionKey": "={{ $json.sessionId }}",
+        "sessionId": "={{ $json.sessionId }}",
+        "contextWindowLength": 20
+      },
+      "id": "1a2b3c4d-0003-4000-8000-000000000003",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        700,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {
+          "temperature": 0.6
+        }
+      },
+      "id": "1a2b3c4d-0004-4000-8000-000000000004",
+      "name": "Groq Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        560,
+        540
+      ],
+      "credentials": {
+        "groqApi": {
+          "id": "YOUR_GROQ_CREDENTIAL_ID",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Format Chat Input').item.json.sessionId }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "parse_mode": "Markdown",
+          "appendAttribution": false
+        }
+      },
+      "id": "1a2b3c4d-0005-4000-8000-000000000005",
+      "name": "Send Telegram Reply",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        960,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "YOUR_TELEGRAM_CREDENTIAL_ID",
+          "name": "Telegram Bot account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Format Chat Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Chat Input": {
+      "main": [
+        [
+          {
+            "node": "AI Career Counselor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Career Counselor": {
+      "main": [
+        [
+          {
+            "node": "Send Telegram Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Career Counselor",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Career Counselor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
