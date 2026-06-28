@@ -46,6 +46,8 @@ The **Window Buffer Memory** node automatically keys its conversation history of
 
 To adjust how the counselor responds, open the **AI Career Counselor** node and edit the `systemMessage` field under parameters. You can tune the prompt for specific industries (e.g., tech, healthcare, finance) or tweak the advice style (strict mock interviewer vs. supportive mentor).
 
+## Author
+Apoorva Yadav
 ## License
 
-MIT
+MIT : free to use, modify, and distribute.
