@@ -1,7 +1,7 @@
 # Aura - Telegram Career Counselor Bot (n8n)
 ![License](https://img.shields.io/github/license/Apoo3va/aura-telegram-career-counselor)
 ![n8n](https://img.shields.io/badge/built%20with-n8n-EA4B71)
-![LangChain](https://img.shields.io/badge/powered%20by-LangChain-1C3C3C)
+![LangChain](https://img.shields.io/badge/powered%20by-LangChain-1C3C3C) <br>
 An open-source AI career guidance counselor bot built with [n8n](https://n8n.io) and LangChain. It integrates directly with Telegram and maintains per-user chat history so conversations feel continuous across sessions.
 
 ## Table of Contents
