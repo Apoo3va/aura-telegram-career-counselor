@@ -27,6 +27,9 @@ When someone messages the bot asking for resume review, career transition advice
 1. Open your n8n dashboard and go to **Workflows** -> **Add Workflow**.
 2. Click the top-right menu (`...`) and select **Import from File**.
 3. Upload `career_guidance_workflow.json` from this repository.
+ ## Workflow Screenshot
+
+![Workflow Screenshot](./workflow/Workflow%20screenshot.jpeg)
 
 ### 3. Connect Credentials
 In the imported workflow canvas:
