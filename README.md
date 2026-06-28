@@ -1,8 +1,15 @@
 # Aura - Telegram Career Counselor Bot (n8n)
-
+![License](https://img.shields.io/github/license/Apoo3va/aura-telegram-career-counselor)
+![n8n](https://img.shields.io/badge/built%20with-n8n-EA4B71)
+![LangChain](https://img.shields.io/badge/powered%20by-LangChain-1C3C3C)
 An open-source AI career guidance counselor bot built with [n8n](https://n8n.io) and LangChain. It integrates directly with Telegram and maintains per-user chat history so conversations feel continuous across sessions.
 
-![Aura Profile Picture](./aura_profile_picture.png)
+## Table of Contents
+- [What it does](#what-it-does)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [How Memory Works](#how-memory-works)
+- [Customizing the Persona](#customizing-the-persona)
 
 ## What it does
 
@@ -26,8 +33,8 @@ When someone messages the bot asking for resume review, career transition advice
 ### 2. Import the Workflow
 1. Open your n8n dashboard and go to **Workflows** -> **Add Workflow**.
 2. Click the top-right menu (`...`) and select **Import from File**.
-3. Upload `career_guidance_workflow.json` from this repository.
-
+3. Upload `workflow/career_guidance_workflow.json` from this repository.
+      
 ### 3. Connect Credentials
 In the imported workflow canvas:
 * **Telegram Trigger & Send Reply nodes:** Click **Credential for Telegram API** -> **Create New** and paste your BotFather token.
