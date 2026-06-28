@@ -8,6 +8,7 @@ An open-source AI career guidance counselor bot built with [n8n](https://n8n.io)
 - [What it does](#what-it-does)
 - [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
+- [Workflow Screenshot](#workflow-screenshot)
 - [How Memory Works](#how-memory-works)
 - [Customizing the Persona](#customizing-the-persona)
 
